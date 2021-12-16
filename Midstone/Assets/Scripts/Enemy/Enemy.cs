@@ -21,6 +21,8 @@ public class Enemy : MonoBehaviour
         tag = "Enemy";
         name = "Enemy";
 
+        isGone = false;
+
         rb = GetComponent<Rigidbody2D>();
 
         rb.mass = 1.0f;
@@ -89,6 +91,7 @@ public class Enemy : MonoBehaviour
         {
             if (collision.gameObject.tag == "Slash")
             {
+                tag = "Untagged";
                 anim.SetBool("Dead", true);
                 anim.Play("Die");
             }

@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Character : MonoBehaviour
 {
@@ -23,11 +22,15 @@ public class Character : MonoBehaviour
     public float projectileForce;
 
     public GameObject spawn;
+
+    public int lives;
     void Start()
     {
 
         tag = "Player";
         name = "Player";
+
+        lives = 2;
 
         rb = GetComponent<Rigidbody2D>();
 
@@ -138,6 +141,11 @@ public class Character : MonoBehaviour
             anim.SetBool("Dead", true);
             rb.AddForce(Vector2.down * (jumpForce + (-rb.velocity.y)), ForceMode2D.Impulse);
         }
+
+        if (collision.gameObject.tag == "End")
+        {
+            PauseMenu.over = true;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -204,12 +212,16 @@ public class Character : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.R))
             {
-
-                //anim.SetBool("Dead", false);
-                //anim.Play("Idle");
-                //transform.position = spawn.transform.position;
-                SceneManager.LoadScene("Level1");
-
+                if (lives != 0)
+                {
+                    lives--;
+                    anim.SetBool("Dead", false);
+                   // this.transform.position.Set(spawn.transform.position.x, spawn.transform.position.y, spawn.transform.position.z);
+                }
+                else
+                {
+                    PauseMenu.over = true;
+                }
             }
         }
     }

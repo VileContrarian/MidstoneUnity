@@ -16,7 +16,6 @@ public class EnemyShooter : Enemy
         rb = GetComponent<Rigidbody2D>();
 
         Fired = false;
-        isGone = false;
     }
 
     void Update()

@@ -33,6 +33,7 @@ public class EnemyWalker : Enemy
             }
             if (collision.gameObject.tag == "Slash")
             {
+                tag = "Untagged";
                 anim.SetBool("Dead", true);
                 anim.Play("Die");
             }
