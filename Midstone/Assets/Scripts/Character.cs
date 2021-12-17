@@ -30,7 +30,9 @@ public class Character : MonoBehaviour
         tag = "Player";
         name = "Player";
 
-        lives = 2;
+        lives = 3;
+
+        PauseMenu.lives = lives;
 
         rb = GetComponent<Rigidbody2D>();
 
@@ -138,8 +140,13 @@ public class Character : MonoBehaviour
 
         if (collision.gameObject.tag == "Death")
         {
-            anim.SetBool("Dead", true);
-            rb.AddForce(Vector2.down * (jumpForce + (-rb.velocity.y)), ForceMode2D.Impulse);
+            if (!anim.GetBool("Dead"))
+            {
+                lives--;
+                PauseMenu.lives = lives;
+                anim.SetBool("Dead", true);
+                rb.AddForce(Vector2.down * (jumpForce + (-rb.velocity.y)), ForceMode2D.Impulse);
+            }
         }
 
         if (collision.gameObject.tag == "End")
@@ -152,8 +159,13 @@ public class Character : MonoBehaviour
     {
         if (collision.gameObject.tag == "Enemy")
         {
-            anim.SetBool("Dead", true);
-            rb.AddForce(Vector2.down * (jumpForce + (-rb.velocity.y)), ForceMode2D.Impulse);
+            if (!anim.GetBool("Dead"))
+            {
+                lives--;
+                PauseMenu.lives = lives;
+                anim.SetBool("Dead", true);
+                rb.AddForce(Vector2.down * (jumpForce + (-rb.velocity.y)), ForceMode2D.Impulse);
+            }
         }
     }
 
@@ -214,9 +226,9 @@ public class Character : MonoBehaviour
             {
                 if (lives != 0)
                 {
-                    lives--;
                     anim.SetBool("Dead", false);
-                   // this.transform.position.Set(spawn.transform.position.x, spawn.transform.position.y, spawn.transform.position.z);
+                    anim.Play("Idle");
+                    transform.position = spawn.transform.position;
                 }
                 else
                 {

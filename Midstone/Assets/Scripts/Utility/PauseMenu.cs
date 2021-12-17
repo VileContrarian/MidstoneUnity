@@ -8,16 +8,17 @@ public class PauseMenu : MonoBehaviour
 {
 
     public static bool IsPaused = false;
-    public static bool CanPause = true;
-    public Text Lives;
+    public bool CanPause = true;
     public GameObject PauseMeu;
-    public Text PauseText;
+    public Text PauseText, Lives;
 
     public static bool over;
+    public static int lives;
 
     void Start()
     {
         over = false;
+        lives = 3;
         PauseMeu.SetActive(true);
         Time.timeScale = 0f;
         IsPaused = true;
@@ -27,6 +28,7 @@ public class PauseMenu : MonoBehaviour
     }
     void Update()
     {
+        UpdateLife();
         if (over)
         {
             GameOver();
@@ -91,6 +93,11 @@ public class PauseMenu : MonoBehaviour
     }
     public void Quit()
     {
+        Application.Quit();
+    }
 
+    public void UpdateLife()
+    {
+        Lives.text = "Lives Left: " + lives;
     }
 }
